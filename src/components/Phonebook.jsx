@@ -16,7 +16,7 @@ class Phonebook extends React.Component {
     contacts: [],
     name: '',
     number: '',
-    filter: 'no',
+    filter: '',
   }
 
   handlerChange = (e) =>{
@@ -66,7 +66,7 @@ class Phonebook extends React.Component {
 
         <h3>Contacts</h3>
         <Filter value={this.state.filter} onChange={this.handlerFilter} />
-        <ContactList array={this.state.contacts} filter={this.state.filter} onClick={this.handlerDelete}/>
+        <ContactList array={this.state.contacts} filtered={this.state.filter} onClick={this.handlerDelete}/>
       </div>
 
     )
