@@ -48,8 +48,8 @@ class Phonebook extends React.Component {
   }
 
   componentDidMount(){
-  //   this.setState({contacts: JSON.parse(localStorage.getItem("contacts"))})
-  // }
+    this.setState({contacts: JSON.parse(localStorage.getItem("contacts"))})
+  }
 
   componentDidUpdate(prevState, nextState){
     if(prevState !== nextState){
