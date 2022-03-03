@@ -1,9 +1,11 @@
 import Phonebook from './Phonebook.jsx'; 
+/** @jsxImportSource @emotion/react */
+import { jsx } from '@emotion/react';
 
 export const App = () => {
   return (
     <div
-      style={{
+      css={{
         height: '100vh',
         display: 'flex',
         justifyContent: 'center',
