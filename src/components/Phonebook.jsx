@@ -16,7 +16,7 @@ class Phonebook extends React.Component {
     contacts: [],
     name: '',
     number: '',
-    filter: '',
+    filter: ' ',
   }
 
   handlerChange = (e) =>{
