@@ -6,11 +6,8 @@ import PropTypes from 'prop-types';
 
 const ContactList = ({array, filtered, onClick}) =>{
   return(
-    <ul 
-      css={{
-        
-      }}>
-        {array.filter(contact => contact.name.toLowerCase().includes(filtered.toLowerCase())).map(contact => (
+    <ul>
+        {(array.filter(contact => contact.name.toLowerCase().includes(filtered.toLowerCase())).map(contact => (
           <li 
             css={{
               marginBottom: '10px',
@@ -31,7 +28,8 @@ const ContactList = ({array, filtered, onClick}) =>{
               }}
               type='button'>Delete</button>
           </li>
-          ))}
+          ))
+        )}
     </ul>
   )
 }
