@@ -14,6 +14,7 @@ const ContactList = ({array, filtered, onClick}) =>{
               width: '600px',
               position: 'relative',
             }}
+            key={contact.id}
             id={contact.id} 
             onClick={onClick} 
           >{contact.name}: {contact.number}
