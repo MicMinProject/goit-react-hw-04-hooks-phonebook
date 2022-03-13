@@ -42,7 +42,7 @@ ContactList.propTypes ={
     number: PropTypes.string,
     id: PropTypes.string,
   })),
-  filter: PropTypes.string,
+  filtered: PropTypes.string,
   onClick: PropTypes.func,
 }
 
