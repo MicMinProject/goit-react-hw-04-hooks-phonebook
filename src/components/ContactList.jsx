@@ -5,9 +5,10 @@ import { jsx } from '@emotion/react'
 import PropTypes from 'prop-types';
 
 const ContactList = ({array, filtered, onClick}) =>{
+  const filteredArray = array.filter(contact => contact.name.toLowerCase().includes(filtered.toLowerCase()))
   return(
     <ul>
-        {(array.filter(contact => contact.name.toLowerCase().includes(filtered.toLowerCase())).map(contact => (
+        {filteredArray.map(contact => (
           <li 
             css={{
               marginBottom: '10px',
@@ -30,7 +31,7 @@ const ContactList = ({array, filtered, onClick}) =>{
               type='button'>Delete</button>
           </li>
           ))
-        )}
+        }
     </ul>
   )
 }
