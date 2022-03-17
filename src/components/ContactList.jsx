@@ -4,11 +4,11 @@ import React from 'react';
 import { jsx } from '@emotion/react'
 import PropTypes from 'prop-types';
 
-const ContactList = ({array, filtered, onClick}) =>{
-  const filteredArray = array.filter(contact => contact.name.toLowerCase().includes(filtered.toLowerCase()))
+const ContactList = ({filteredContacts, originContacts, filter, onClick}) =>{
+  
   return(
     <ul>
-        {filteredArray.map(contact => (
+        {(filter === '' ? originContacts : filteredContacts).map(contact => (
           <li 
             css={{
               marginBottom: '10px',
@@ -37,12 +37,11 @@ const ContactList = ({array, filtered, onClick}) =>{
 }
 
 ContactList.propTypes ={
-  array: PropTypes.arrayOf(PropTypes.shape({
+  filtered: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     number: PropTypes.string,
     id: PropTypes.string,
   })),
-  filtered: PropTypes.string,
   onClick: PropTypes.func,
 }
 

@@ -17,8 +17,10 @@ class Phonebook extends React.Component {
     name: '',
     number: '',
     filter: '',
+    filteredContacts: [],
   }
 
+  
   handlerChange = (e) =>{
     this.setState({[e.target.name]: e.target.value});
   }
@@ -33,11 +35,12 @@ class Phonebook extends React.Component {
     this.setState({...INITIAL_STATE})
       if (this.state.contacts.some(contact =>contact.name === name)) 
         {return alert(`${name} is already in contacts`)}
-      else {return this.setState({contacts: [...this.state.contacts, {name: name, number: number, id: id}]})}
+        else {return this.setState({contacts: [...this.state.contacts, {name: name, number: number, id: id}]})}
   }
     
-  handlerFilter =  (e) =>{
-     this.setState({filter: e.target.value})
+  handlerFilter = async (e) =>{
+    await this.setState({filter: e.target.value})
+    this.setState({filteredContacts: this.state.contacts.filter(contact => contact.name.toLowerCase().includes(this.state.filter.toLowerCase()))}) 
   }
 
   handlerDelete = (e) =>{
@@ -66,7 +69,7 @@ class Phonebook extends React.Component {
 
         <h3>Contacts</h3>
         <Filter value={this.state.filter} onChange={this.handlerFilter} />
-        <ContactList array={this.state.contacts} filtered={this.state.filter} onClick={this.handlerDelete}/>
+        <ContactList originContacts={this.state.contacts} filter={this.state.filter} filteredContacts={this.state.filteredContacts} onClick={this.handlerDelete}/>
       </div>
 
     )
