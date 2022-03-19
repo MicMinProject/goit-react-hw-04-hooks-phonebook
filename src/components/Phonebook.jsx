@@ -1,5 +1,4 @@
 import React from 'react';
-import ErrorBoundary from './ErrorBoundary.jsx';
 import {nanoid} from 'nanoid';
 import Filter from './Filter.jsx';
 import ContactForm from './ContactForm.jsx';
@@ -64,7 +63,6 @@ class Phonebook extends React.Component {
   render() {
     return(
       <div>
-        <ErrorBoundary>
           <h2>Phonebook</h2>
           <ContactForm onSubmit={this.handlerSubmit} id={nanoid()} valueName={this.state.name} valueNumber={this.state.number}
           onChange={this.handlerChange} />
@@ -72,7 +70,6 @@ class Phonebook extends React.Component {
           <h3>Contacts</h3>
           <Filter value={this.state.filter} onChange={this.handlerFilter} />
           <ContactList originContacts={this.state.contacts} filter={this.state.filter} filteredContacts={this.state.filteredContacts} onClick={this.handlerDelete}/>
-        </ErrorBoundary>
       </div>
 
     )

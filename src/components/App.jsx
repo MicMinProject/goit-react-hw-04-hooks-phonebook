@@ -1,4 +1,6 @@
 import Phonebook from './Phonebook.jsx'; 
+
+import ErrorBoundary from './ErrorBoundary.jsx';
 /** @jsxImportSource @emotion/react */
 import { jsx } from '@emotion/react';
 
@@ -14,7 +16,9 @@ export const App = () => {
         color: '#010101',
       }}
     >
-     <Phonebook />
+      <ErrorBoundary>
+        <Phonebook />
+      </ErrorBoundary>
     </div>
   );
 };
