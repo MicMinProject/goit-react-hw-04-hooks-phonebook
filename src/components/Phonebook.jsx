@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {nanoid} from 'nanoid';
 import Filter from './Filter.jsx';
 import ContactForm from './ContactForm.jsx';
@@ -10,70 +10,74 @@ const INITIAL_STATE={
   filter: '',
 }
 
-class Phonebook extends React.Component {
+function Phonebook() {
 
-  state = {
-    contacts: [],
-    name: '',
-    number: '',
-    filter: '',
-    filteredContacts: [],
-  }
+  const [contacts, setContacts] = useState([]);
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [filter, setFilter] = useState('');
+  const [filteredContacts, setFilteredContacts] = useState([]);
+  const [deleted, setDeleted] = useState(0);
 
   
-  handlerChange = (e) =>{
-    this.setState({[e.target.name]: e.target.value});
+  const handlerChange = (e) =>{
+    e.target.name === 'name' ? setName(e.target.value) : setNumber(e.target.value)
   }
 
-  handlerSubmit = (e) =>{
+  const handlerSubmit = (e) =>{
     e.preventDefault();
     const form = e.currentTarget;
     const name = form.elements.name.value;
     const id= form.elements.name.id;
     const number=form.elements.number.value;
     form.reset()
-    this.setState({...INITIAL_STATE})
-      if (this.state.contacts.some(contact =>contact.name === name)) 
+    setName(''); setNumber(''); setFilter('');
+      if (contacts.some(contact =>contact.name === name)) 
         {return alert(`${name} is already in contacts`)}
-        else {return this.setState({contacts: [...this.state.contacts, {name: name, number: number, id: id}]})}
+        else {return setContacts( [...contacts, {name: name, number: number, id: id}])}
   }
     
-  handlerFilter = async (e) =>{
-    await this.setState({filter: e.target.value})
-    this.setState({filteredContacts: this.state.contacts.filter(contact => contact.name.toLowerCase().includes(this.state.filter.toLowerCase()))}) 
+  const handlerFilter = (e) =>{
+     setFilter(e.target.value);
   }
 
-  handlerDelete = (e) =>{
-    this.state.contacts.map(contact => {if(contact.id === e.currentTarget.id){
-      this.state.contacts.splice(this.state.contacts.indexOf(contact), 1);
-      this.setState((state) => ({contacts: state.contacts}))
-    }})
+  const handlerDelete = (e) =>{
+    contacts.map(contact => {if(contact.id === e.currentTarget.id){
+      contacts.splice(contacts.indexOf(contact), 1)
+    }});
+    setDeleted(contacts.length);
   }
 
-  componentDidMount(){
-    this.setState({contacts: JSON.parse(localStorage.getItem("contacts"))})
-  }
+  useEffect(() => {
+    setContacts(contacts)
+  },[deleted])
 
-  componentDidUpdate(prevState, nextState){
-    if(prevState !== nextState){
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
-    }
-  }
+  useEffect(() => {
+    setFilteredContacts(contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase())));
+  },[filter])
 
-  render() {
+  useEffect(() => {
+    setContacts(JSON.parse(localStorage.getItem("contacts")));
+  },[])
+
+  useEffect(() => {
+      localStorage.setItem("contacts", JSON.stringify(contacts));
+  },[contacts, deleted])
+
+  
     return(
       <div>
           <h2>Phonebook</h2>
-          <ContactForm onSubmit={this.handlerSubmit} id={nanoid()} valueName={this.state.name} valueNumber={this.state.number}
-          onChange={this.handlerChange} />
+          <ContactForm onSubmit={handlerSubmit} id={nanoid()} valueName={name} valueNumber={number}
+          onChange={handlerChange} />
 
           <h3>Contacts</h3>
-          <Filter value={this.state.filter} onChange={this.handlerFilter} />
-          <ContactList originContacts={this.state.contacts} filter={this.state.filter} filteredContacts={this.state.filteredContacts} onClick={this.handlerDelete}/>
+          <Filter value={filter} onChange={handlerFilter} />
+          <ContactList originContacts={contacts} filter={filter} filteredContacts={filteredContacts} onClick={handlerDelete}/>
       </div>
 
     )
-  }
+  
 }
 
 export default Phonebook;
