@@ -32,9 +32,9 @@ function Phonebook() {
     const number=form.elements.number.value;
     form.reset()
     setName(''); setNumber(''); setFilter('');
-      if (contacts.some(contact =>contact.name === name)) 
-        {return alert(`${name} is already in contacts`)}
-        else {return setContacts( [...contacts, {name: name, number: number, id: id}])}
+    contacts === null ? setContacts([{name: name, number: number, id: id}]) :
+    (contacts.some(contact =>contact.name === name) ? alert(`${name} is already in contacts`) :
+      setContacts([...contacts, {name: name, number: number, id: id}]))
   }
     
   const handlerFilter = (e) =>{
@@ -73,7 +73,7 @@ function Phonebook() {
 
           <h3>Contacts</h3>
           <Filter value={filter} onChange={handlerFilter} />
-          <ContactList originContacts={contacts} filter={filter} filteredContacts={filteredContacts} onClick={handlerDelete}/>
+          <ContactList contacts={filter === '' ? contacts : filteredContacts} onClick={handlerDelete}/>
       </div>
 
     )
