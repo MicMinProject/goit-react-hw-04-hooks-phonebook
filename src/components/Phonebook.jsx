@@ -49,12 +49,12 @@ function Phonebook() {
   }
 
   useEffect(() => {
-    setContacts(contacts)
+    setContacts(contacts);
   },[deleted])
 
   useEffect(() => {
     setFilteredContacts(contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase())));
-  },[filter])
+  },[filter, deleted])
 
   useEffect(() => {
     setContacts(JSON.parse(localStorage.getItem("contacts")));
